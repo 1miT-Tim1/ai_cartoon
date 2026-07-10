@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 数据库
+*.db
+instance/
+
+# 上传/生成的文件
+uploads/
+results/
+
+# 环境变量
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# 系统文件
+.DS_Store
+Thumbs.db

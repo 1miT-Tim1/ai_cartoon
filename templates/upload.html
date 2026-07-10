@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}上传图片 - AI Cartoonizer{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>图片卡通化</h2>
+    <p>上传一张人像照片，生成卡通风格图片。</p>
+
+    <form method="POST" action="{{ url_for('main.upload') }}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="image" class="form-label">选择图片</label>
+            <input class="form-control" type="file" id="image" name="image"
+                   accept=".jpg,.jpeg,.png" required>
+            <div class="form-text">支持 JPG、PNG 格式，最大 16MB。</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full">
+            开始卡通化
+        </button>
+    </form>
+</div>
+{% endblock %}

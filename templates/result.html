@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}生成结果 - AI Cartoonizer{% endblock %}
+
+{% block content %}
+<h2>卡通化结果</h2>
+<p>原图：{{ original_name }}</p>
+
+<div class="grid grid-2" style="margin: 32px 0;">
+    <div class="card" style="padding: 20px;">
+        <div class="card-header" style="padding-bottom: 12px; margin-bottom: 12px;">原图</div>
+        <img src="{{ original_url }}" class="img-fluid" alt="原图">
+    </div>
+
+    <div class="card" style="padding: 20px;">
+        <div class="card-header" style="padding-bottom: 12px; margin-bottom: 12px;">卡通化</div>
+        <img src="{{ result_url }}" class="img-fluid" alt="生成结果">
+    </div>
+</div>
+
+<div class="text-center" style="gap: 16px; display: flex; justify-content: center; flex-wrap: wrap;">
+    <a href="{{ result_url }}" class="btn btn-primary" download>下载结果</a>
+    <a href="{{ url_for('main.upload') }}" class="btn btn-secondary">再传一张</a>
+</div>
+{% endblock %}

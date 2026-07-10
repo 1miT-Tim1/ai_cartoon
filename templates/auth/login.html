@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}登录 - AI Cartoonizer{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 420px; margin: 0 auto;">
+    <h2 style="text-align: center;">用户登录</h2>
+
+    <form method="POST" action="{{ url_for('auth.login') }}" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control", placeholder="请输入用户名") }}
+            {% if form.username.errors %}
+                <div class="form-error">{{ form.username.errors[0] }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-control", placeholder="请输入密码") }}
+            {% if form.password.errors %}
+                <div class="form-error">{{ form.password.errors[0] }}</div>
+            {% endif %}
+        </div>
+
+        {{ form.submit(class="btn btn-primary btn-full") }}
+    </form>
+</div>
+
+<p style="text-align: center; margin-top: 24px;">
+    还没有账号？<a href="{{ url_for('auth.register') }}">立即注册</a>
+</p>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}个人中心 - AI Cartoonizer{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>个人中心</h2>
+    <p>这个页面需要 <code>@login_required</code> 才能访问。</p>
+
+    <div class="card-header">用户信息</div>
+    <table>
+        <tbody>
+            <tr>
+                <td>用户 ID</td>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <td>用户名</td>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <td>注册时间</td>
+                <td>{{ user.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}
