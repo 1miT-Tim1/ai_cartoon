@@ -28,12 +28,6 @@
 | **SQLite** | 数据库（开发环境） |
 | **Bootstrap** | 前端样式 |
 
-## 📸 效果预览
-
-| 原图 | 卡通图 |
-|------|--------|
-| ![原图](screenshots/original.jpg) | ![卡通图](screenshots/cartoon.jpg) |
-
 ## 🚀 快速开始
 
 ### 环境要求
@@ -60,15 +54,12 @@ source .venv/bin/activate
 # 4. 安装依赖
 pip install -r requirements.txt
 
-# 5. 配置环境变量（可选）
-# 复制 .env.example 为 .env 并修改配置
-
-# 6. 初始化数据库
+# 5. 初始化数据库
 flask db init
 flask db migrate -m "init database"
 flask db upgrade
 
-# 7. 运行项目
+# 6. 运行项目
 python app.py
 ```
 
@@ -78,31 +69,3 @@ python app.py
 
 · 首次启动会自动下载 DCT-Net 模型（约 500MB），请保持网络畅通
 · 下载可能需要 3-5 分钟，请耐心等待
-
-📁 项目结构
-
-```
-AI_cartoon/
-├── app.py                 # 应用主入口
-├── models.py              # 数据库模型
-├── forms.py               # 表单定义
-├── cartoonizer.py         # 卡通化核心逻辑
-├── config.py              # 配置文件
-├── requirements.txt       # 依赖清单
-├── .env                   # 环境变量（不提交）
-├── .gitignore             # Git 忽略文件
-├── README.md              # 项目说明
-├── templates/             # HTML 模板
-│   ├── base.html          # 基础模板
-│   ├── login.html         # 登录页
-│   ├── register.html      # 注册页
-│   ├── upload.html        # 上传页
-│   └── result.html        # 结果展示页
-├── static/                # 静态资源
-│   ├── css/
-│   │   └── style.css
-│   └── js/
-│       └── main.js
-├── uploads/               # 用户上传（不提交）
-└── results/               # 生成结果（不提交）
-```
