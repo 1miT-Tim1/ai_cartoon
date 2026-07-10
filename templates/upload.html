@@ -7,15 +7,35 @@
     <h2>图片卡通化</h2>
     <p>上传一张人像照片，生成卡通风格图片。</p>
 
-    <form method="POST" action="{{ url_for('main.upload') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ url_for('main.upload') }}" enctype="multipart/form-data" id="uploadForm">
         <div class="form-group">
-            <label for="image" class="form-label">选择图片</label>
-            <input class="form-control" type="file" id="image" name="image"
-                   accept=".jpg,.jpeg,.png" required>
-            <div class="form-text">支持 JPG、PNG 格式，最大 16MB。</div>
+            <label for="model_type" class="form-label">选择风格</label>
+            <select id="model_type" name="model_type" class="form-control" required>
+                {% for key, config in models.items() %}
+                    <option value="{{ key }}" {% if key == 'anime' %}selected{% endif %}>
+                        {{ config['name'] }}
+                    </option>
+                {% endfor %}
+            </select>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-full">
+        <div class="drop-zone" id="dropZone">
+            <div class="drop-zone-content">
+                <div class="drop-zone-icon">📷</div>
+                <div class="drop-zone-text">拖拽图片到这里，或点击选择文件</div>
+                <div class="drop-zone-hint">支持 JPG、PNG 格式，最大 16MB</div>
+            </div>
+            <input type="file" id="image" name="image" accept=".jpg,.jpeg,.png" required class="drop-zone-input">
+        </div>
+
+        <div id="previewContainer" style="display: none; margin-top: 24px;">
+            <div style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 12px;">
+                预览：<span id="fileName"></span>
+            </div>
+            <img id="previewImage" class="img-fluid" style="max-height: 300px; object-fit: contain;">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full" style="margin-top: 24px;">
             开始卡通化
         </button>
     </form>

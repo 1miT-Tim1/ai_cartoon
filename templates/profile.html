@@ -30,7 +30,7 @@
     <div class="card-header">我的作品</div>
 
     {% if images %}
-        <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+        <div class="gallery-scroll">
             {% for img in images %}
                 <div style="border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;">
                     <div style="display: grid; grid-template-columns: 1fr 1fr;">

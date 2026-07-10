@@ -2,7 +2,7 @@ import os
 import uuid
 from flask import Blueprint, render_template, jsonify, request, send_from_directory, current_app, flash, redirect, url_for
 from flask_login import login_required, current_user
-from cartoonizer import cartoonize, is_model_ready, get_model_error
+from cartoonizer import cartoonize, is_model_ready, get_model_error, MODEL_CONFIGS
 from models import db, CartoonImage
 
 main_bp = Blueprint('main', __name__)
@@ -35,7 +35,7 @@ def profile():
 def upload():
     """图片上传并卡通化"""
     if request.method == 'GET':
-        return render_template('upload.html')
+        return render_template('upload.html', models=MODEL_CONFIGS)
 
     if 'image' not in request.files:
         flash('未找到上传文件。', 'danger')
@@ -50,6 +50,11 @@ def upload():
         flash(f'不支持的文件类型，仅允许: {", ".join(ALLOWED_EXTENSIONS)}', 'danger')
         return redirect(url_for('main.upload'))
 
+    model_type = request.form.get('model_type', 'anime')
+    if model_type not in MODEL_CONFIGS:
+        flash('无效的模型类型。', 'danger')
+        return redirect(url_for('main.upload'))
+
     # 保存原始图片
     ext = file.filename.rsplit('.', 1)[1].lower()
     unique_name = f'{uuid.uuid4().hex}.{ext}'
@@ -57,16 +62,16 @@ def upload():
     file.save(upload_path)
 
     # 模型就绪检查
-    if not is_model_ready():
-        flash(f'模型加载失败: {get_model_error()}', 'danger')
+    if not is_model_ready(model_type):
+        flash(f'模型加载失败: {get_model_error(model_type)}', 'danger')
         return redirect(url_for('main.upload'))
 
-    # 调用 DCT-Net 卡通化
+    # 调用模型卡通化
     result_name = f'{uuid.uuid4().hex}.jpg'
     result_path = os.path.join(current_app.config['RESULT_FOLDER'], result_name)
 
     try:
-        cartoonize(upload_path, result_path)
+        cartoonize(upload_path, result_path, model_type)
     except Exception as e:
         flash(f'卡通化处理失败: {str(e)}', 'danger')
         return redirect(url_for('main.upload'))
