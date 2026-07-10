@@ -28,12 +28,6 @@
 | **SQLite** | 数据库（开发环境） |
 | **Bootstrap** | 前端样式 |
 
-## 📸 效果预览
-
-| 原图 | 卡通图 |
-|------|--------|
-| ![原图](screenshots/original.jpg) | ![卡通图](screenshots/cartoon.jpg) |
-
 ## 🚀 快速开始
 
 ### 环境要求
