@@ -9,12 +9,13 @@ db = SQLAlchemy()
 class User(UserMixin, db.Model):
     """用户模型"""
     __tablename__ = 'users'
-
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(80), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(128), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    images = db.relationship('CartoonImage', backref='user', lazy='dynamic', cascade='all, delete-orphan')
 
     def set_password(self, password):
         """使用 bcrypt 加密密码"""
@@ -38,3 +39,17 @@ class User(UserMixin, db.Model):
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None,
         }
+
+
+class CartoonImage(db.Model):
+    """用户生成的卡通图片记录"""
+    __tablename__ = 'cartoon_images'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
+    original_filename = db.Column(db.String(255), nullable=False)
+    original_path = db.Column(db.String(500), nullable=False)
+    result_path = db.Column(db.String(500), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f'<CartoonImage {self.id} for User {self.user_id}>'

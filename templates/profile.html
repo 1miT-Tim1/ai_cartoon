@@ -3,17 +3,13 @@
 {% block title %}个人中心 - AI Cartoonizer{% endblock %}
 
 {% block content %}
-<div class="card">
-    <h2>个人中心</h2>
-    <p>这个页面需要 <code>@login_required</code> 才能访问。</p>
+<h2>个人中心</h2>
+<p>欢迎回来，{{ user.username }}</p>
 
+<div class="card">
     <div class="card-header">用户信息</div>
     <table>
         <tbody>
-            <tr>
-                <td>用户 ID</td>
-                <td>{{ user.id }}</td>
-            </tr>
             <tr>
                 <td>用户名</td>
                 <td>{{ user.username }}</td>
@@ -22,7 +18,50 @@
                 <td>注册时间</td>
                 <td>{{ user.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
             </tr>
+            <tr>
+                <td>生成图片</td>
+                <td>{{ images|length }} 张</td>
+            </tr>
         </tbody>
     </table>
+</div>
+
+<div class="card">
+    <div class="card-header">我的作品</div>
+
+    {% if images %}
+        <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+            {% for img in images %}
+                <div style="border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr;">
+                        <div style="padding: 16px; background: var(--bg-cream);">
+                            <div style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 8px;">原图</div>
+                            <img src="{{ url_for('main.get_upload', filename=img.original_path) }}"
+                                 class="img-fluid" alt="原图">
+                        </div>
+                        <div style="padding: 16px; background: var(--bg-card);">
+                            <div style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 8px;">卡通化</div>
+                            <img src="{{ url_for('main.get_result', filename=img.result_path) }}"
+                                 class="img-fluid" alt="生成结果">
+                        </div>
+                    </div>
+                    <div style="padding: 12px 16px; background: var(--bg-cream); border-top: 1px solid var(--border);
+                                display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">{{ img.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+                        <a href="{{ url_for('main.get_result', filename=img.result_path) }}"
+                           class="btn btn-primary" style="font-size: 0.85rem; padding: 6px 16px;">下载</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div style="text-align: center; padding: 40px 20px; color: var(--text-light);">
+            <div style="font-size: 3rem; margin-bottom: 16px;">🖼️</div>
+            <p>还没有生成过卡通图片</p>
+            <p style="margin-top: 8px;">
+                <a href="{{ url_for('main.upload') }}" class="btn btn-primary">去生成一张</a>
+            </p>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}

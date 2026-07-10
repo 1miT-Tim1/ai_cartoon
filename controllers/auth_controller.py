@@ -5,7 +5,6 @@ from forms import LoginForm, RegistrationForm
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
-
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     """用户登录"""
@@ -25,7 +24,6 @@ def login():
 
     return render_template('auth/login.html', form=form)
 
-
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     """用户注册"""
@@ -42,7 +40,6 @@ def register():
         return redirect(url_for('auth.login'))
 
     return render_template('auth/register.html', form=form)
-
 
 @auth_bp.route('/logout')
 @login_required

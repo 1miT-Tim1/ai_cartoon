@@ -3,7 +3,6 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
 from models import User
 
-
 class LoginForm(FlaskForm):
     """登录表单"""
     username = StringField('用户名', validators=[
@@ -13,7 +12,6 @@ class LoginForm(FlaskForm):
         DataRequired(message='请输入密码'),
     ])
     submit = SubmitField('登录')
-
 
 class RegistrationForm(FlaskForm):
     """注册表单"""
