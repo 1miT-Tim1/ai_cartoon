@@ -27,7 +27,7 @@ jobs:
       - name: Upload template folder content as site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './template' # ✅这里就是你的template文件夹！
+          path: './templates' # ✅这里就是你的template文件夹！
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
